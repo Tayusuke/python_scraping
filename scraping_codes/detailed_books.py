@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 import csv
+from time import sleep
 
 head = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -18,6 +19,8 @@ count = 0
 
 while url and count <= 3:
     res = requests.get(url, headers=head)
+    res.encoding = res.apparent_encoding
+    sleep(1)
     soup = BeautifulSoup(res.text, "html.parser")
     for article in soup.select(".product_pod"):
         title = article.h3.a["title"]
